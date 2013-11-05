@@ -74,3 +74,15 @@
   (is (= "DROP INDEX INDEX")
       (sql/entities str/upper-case
                     (ddl/drop-index :index))))
+
+(deftest test-create-primary-key
+  (is (= "ALTER TABLE tablename ADD PRIMARY KEY (field1, field2)")
+      (ddl/create-primary-key :tablename [:field1 :field2]))
+  (is (= "ALTER TABLE \"table-name\" ADD PRIMARY KEY (\"field-1\", \"field-2\")")
+      (ddl/create-primary-key :table-name [:field-1 :field-2] :entities (sql/quoted "\""))))
+
+(deftest test-create-foreign-key
+  (is (= "ALTER TABLE tablename ADD CONSTRAINT constraintname FOREIGN KEY (field1) REFERENCES reftablename (reffield1)")
+      (ddl/create-foreign-key :constraintname :tablename :field1 :reftablename :reffield1))
+  (is (= "ALTER TABLE tablename ADD CONSTRAINT constraintname FOREIGN KEY (field1) REFERENCES reftablename (reffield1)")
+      (ddl/create-foreign-key :ConstraintName :TableName :field1 :RefTableName :reffield1 :entities sql/lower-case)))

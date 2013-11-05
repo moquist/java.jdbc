@@ -87,7 +87,9 @@ and update! high-level operations within clojure.java.jdbc directly." }
     "insert" "insert!"
     "select" "join" "where" "order-by"
     "update" "update!"
-    "create-table" "drop-table" "create-index" "drop-index"})
+    "create-table" "drop-table"
+    "create-index" "drop-index"
+    "create-primary-key" "create-foreign-key"})
 
 (def ^{:private true
        :doc "Symbols that need to be processed for identifiers within their forms."}
